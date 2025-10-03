@@ -1,0 +1,93 @@
+﻿@model Pokemon
+@{
+    ViewData["Title"] = Model?.Name ?? "Not Found";
+}
+
+@if (Model == null)
+{
+    <div class="error-container">
+        <p class="error-text">@ViewBag.Error</p>
+    </div>
+}
+else
+{
+    <div class="pokedex-screen">
+        <div class="pokedex-header">
+            <h1 class="pokedex-title">@Model.Name</h1>
+        </div>
+        <div class="pokedex-body">
+            <div class="pokemon-image-panel">
+                <div class="image-frame">
+                    <img src="@Model.Sprites.Other.OfficialArtwork.FrontDefault" alt="@Model.Name" class="pokemon-image" />
+                </div>
+            </div>
+            <div class="details-panel">
+                <div class="details-section">
+                    <div class="detail-block stats-block">
+                        <h3 class="block-header">Base Stats</h3>
+                        <ul class="stat-list">
+                            @foreach (var stat in Model.Stats)
+                            {
+                                <li class="stat-item">
+                                    <span class="stat-name">@stat.Stat.Name</span>:
+                                    <span class="stat-value">@stat.BaseStat</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="detail-block types-abilities-block">
+                        <h3 class="block-header">Types & Abilities</h3>
+                        <div class="type-container">
+                            @foreach (var type in Model.Types)
+                            {
+                                <span class="type-badge type-@type.Type.Name.ToLower()">@type.Type.Name</span>
+                            }
+                        </div>
+                        <ul class="ability-list">
+                            @foreach (var ability in Model.Abilities)
+                            {
+                                <li class="ability-item">@ability.Ability.Name @(ability.IsHidden ? "<em>(Hidden)</em>" : "")</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <div class="detail-block moves-block">
+                        <h3 class="block-header">Moves (First 5)</h3>
+                        <ul class="move-list">
+                            @foreach (var move in Model.Moves.Take(5))
+                            {
+                                <li class="move-item">@move.Move.Name</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="detail-block vitals-block">
+                        <h3 class="block-header">Vitals & Held Items</h3>
+                        <div class="vitals-container">
+                            <p class="detail-item"><strong>ID:</strong> <span class="detail-value">#@Model.Id</span></p>
+                            <p class="detail-item"><strong>Height:</strong> <span class="detail-value">@Model.Height dm</span></p>
+                            <p class="detail-item"><strong>Weight:</strong> <span class="detail-value">@Model.Weight hg</span></p>
+                            <p class="detail-item"><strong>Base XP:</strong> <span class="detail-value">@Model.BaseExperience</span></p>
+                        </div>
+                        <div class="items-container">
+                            <h4 class="sub-header">Held Items</h4>
+                            @if (Model.HeldItems.Any())
+                            {
+                                <ul class="item-list">
+                                    @foreach (var item in Model.HeldItems)
+                                    {
+                                        <li class="item-item">@item.Item.Name</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <p class="no-items">None</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

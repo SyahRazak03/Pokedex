@@ -1,0 +1,47 @@
+﻿@model List<Pokemon>
+@{
+    ViewData["Title"] = "Pokedex";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <p style="color: red;">@ViewBag.Error</p>
+}
+else
+{
+    <div class="container-fluid">
+        @if (Model.Any())
+        {
+            
+            <div class="row justify-content-center">
+                @foreach (var pokemon in Model)
+                {
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6 pokemon-card">
+                        <a asp-controller="Home" asp-action="Details" asp-route-name="@pokemon.Name.ToLower()" class="text-decoration-none">
+                            <img src="@pokemon.Sprites.Other.OfficialArtwork.FrontDefault" alt="@pokemon.Name" class="img-fluid" />
+                            <p class="pokemon-id">#@(pokemon.Id.ToString("D4"))</p>
+                            <h5 class="pokemon-name">@pokemon.Name</h5>
+                            <div class="pokemon-types">
+                                @foreach (var type in pokemon.Types)
+                                {
+                                    <span class="type-badge type-@type.Type.Name.ToLower()">@type.Type.Name</span>
+                                }
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No Pokemon data available.</p>
+        }
+    </div>
+
+    @if (ViewBag.HasMore)
+    {
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="/Home/Index?offset=@ViewBag.NextOffset" class="btn btn-primary">LOAD MORE POKEMON</a>
+        </div>
+    }
+}

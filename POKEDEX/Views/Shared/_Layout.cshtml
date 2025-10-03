@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - POKEDEX</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/POKEDEX.styles.css" asp-append-version="true" />
+    <style>
+        header {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid #ffffff33;
+        }
+
+        .nav-left {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #ffffff, #e0e0e0);
+            color: #333;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+            .nav-btn:hover {
+                
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #ffffff1a;
+            border-radius: 25px;
+            padding: 5px;
+            backdrop-filter: blur(5px);
+            border: 1px solid #ffffff33;
+        }
+
+            .search-bar input {
+                background: transparent;
+                border: none;
+                padding: 8px 15px;
+                color: white;
+                border-radius: 25px 0 0 25px;
+                outline: none;
+                font-size: 16px;
+            }
+
+                .search-bar input::placeholder {
+                    color: #ffffff99;
+                }
+
+            .search-bar button {
+                background: linear-gradient(45deg, #ffffff, #e0e0e0);
+                color: #333;
+                padding: 8px 15px;
+                border: none;
+                border-radius: 0 25px 25px 0;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+
+                .search-bar button:hover {
+                    background: linear-gradient(45deg, #e0e0e0, #ffffff);
+                    transform: scale(1.05);
+                }
+
+        .title {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #ffffff66;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-left">
+            <a href="/" class="nav-btn">HOME</a>
+            <a href="/Home/About" class="nav-btn">ABOUT</a>
+        </nav>
+        <h1 class="title">POKEDEX</h1>
+        <div class="search-bar">
+            <form asp-action="Search" method="get">
+                <input type="text" name="query" placeholder="Search Pokemon..." />
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3" style="margin-bottom: 60px;">
+            @RenderBody()
+        </main>
+    </div>
+    <footer>
+        WEB API ASSIGNMENT
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
